@@ -206,11 +206,13 @@ public class LogCat implements Logging{
      */
     @Override
     public void var(String tag, String message, Object... data) {
-        StringBuilder result = new StringBuilder(message);
-        for (Object object: data) {
-            result.append(" " + (object != null ? object.toString() : "(null)"));
+        if (enabled) {
+            StringBuilder result = new StringBuilder(message);
+            for (Object object : data) {
+                result.append(" ").append(object != null ? object.toString() : "(null)");
+            }
+            v(tag, result.toString());
         }
-        v(tag, result.toString());
     }
 
     /**
