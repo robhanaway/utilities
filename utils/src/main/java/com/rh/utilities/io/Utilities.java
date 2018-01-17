@@ -26,6 +26,12 @@ public class Utilities {
         void complete(long totalRead);
     }
 
+    public Utilities(final @NonNull Utilities utilities) {
+        this(utilities.bufferSize, utilities.callback);
+        read = utilities.getRead();
+        written = utilities.getWritten();
+    }
+
     public Utilities(final int bufferSize, final Callback callback) {
         this.bufferSize = bufferSize;
         this.callback = callback;
@@ -36,7 +42,8 @@ public class Utilities {
     }
 
     public Utilities() {
-        this(null);
+        callback = null;
+        bufferSize = DEFAULT_BUFFER_SIZE;
     }
 
     public long getRead() {
@@ -75,11 +82,11 @@ public class Utilities {
         }
     }
 
-    public void copy(@NonNull InputStream inputStream, @NonNull OutputStream outputStream) {
+    public void copy(@NonNull final InputStream inputStream, @NonNull final OutputStream outputStream) {
         copy(inputStream, outputStream, callback);
     }
 
-    public void copy(@NonNull InputStream inputStream, @NonNull OutputStream outputStream, final Callback callback) {
+    public void copy(@NonNull final InputStream inputStream, @NonNull final OutputStream outputStream, final Callback callback) {
         int emitThreshold = callback != null ? callback.getEmitThreshold() : 0;
         byte[] buffer = new byte[bufferSize];
         long totalRead = 0;

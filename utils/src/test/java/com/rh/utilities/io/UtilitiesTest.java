@@ -110,6 +110,11 @@ public class UtilitiesTest {
         Assert.assertEquals(INPUT_STREAM_SIZE, utilities.getWritten());
         Assert.assertNull(myCallback.getException());
         Assert.assertEquals((INPUT_STREAM_SIZE/BUFFER_SIZE) + 1, myCallback.getEmitCount());
+
+        Utilities utilities1 = new Utilities(utilities);
+        Assert.assertEquals(INPUT_STREAM_SIZE, utilities1.getRead());
+        Assert.assertEquals(INPUT_STREAM_SIZE, utilities1.getWritten());
+
         utilities.clearWritten();
         utilities.clearRead();
 
